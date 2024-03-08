@@ -1,0 +1,22 @@
+﻿@model IEnumerable<TopChart.Models.Tracks>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<header>
+    <div id="header">
+    <nav id="nav">
+        <a asp-area="" asp-controller="Home" asp-action="Index"><img src="/Logo/TopChartLogo.jpg" /></a>
+        <a  asp-area="" asp-controller="Home" asp-action="Video"><img src="/Logo/Plast.jpg" />Watch</a>
+        <a  asp-area="" asp-controller="Account" asp-action="Login">
+            <img src="/Logo/Plast.jpg" />Sign In
+        </a>
+    </nav>
+    </div>
+</header>
+<hr />
+@foreach (var m in Model)
+{
+   
+}
