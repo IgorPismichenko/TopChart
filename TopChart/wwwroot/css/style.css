@@ -3,12 +3,22 @@
 * {
     font-family: "Varela Round", sans-serif;
 }
+body {
+    margin-bottom: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image:url('../Logo/back.jpg');
+    background-size:cover;
+}
+
 header{
     text-align: center;
 }
 #header {
     display: inline-block;
-    width: 1000px;
+    width: 800px;
+    background-color: #0a2980;
 }
 #nav {
     display: flex;
@@ -20,5 +30,197 @@ a {
     margin-left: 1%;
     margin-top: 1%;
     margin-right: 1%;
+    font-size: 10pt;
+    color: yellow;
+    border: solid 1.5px yellow;
+    border-radius: 10px;
+    box-shadow: 0 0 10px yellow;
+    width: 100px;
+}
+a:hover{
+    color:aqua;
+}
+#a2 {
+    display: block;
+    border: solid 1.5px #0a2980;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #0a2980;
+    width: 100px;
+    color: #0a2980;
+    text-align: center;
+    background-color: yellow;
+    margin-bottom: 3px;
+}
+    #a2:hover {
+        color: aqua;
+    }
+#a3 {
+    color: red;
+    font-size: 10px;
+    border: 0;
+    box-shadow: none;
 }
 
+    #a3:hover {
+        color: aqua;
+    }
+#main {
+    width: 800px;
+    min-height: 100vh;
+}
+
+.button {
+    width: 100px;
+    background-color: #F8F8FF;
+    border: none;
+    border-radius: 25px;
+    font-size: 12px;
+    color: #0a2980;
+    box-shadow: -6px -6px 10px #f9f9f9, 6px 6px 10px #00000026;
+}
+    .button:hover {
+        box-shadow: 2px 2px 2px #f9f9f9,
+            -2px -2px 2px #00000026;
+    }
+
+#mainReg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+label {
+    font-size: 8pt;
+    color: #0000FF;
+}
+#divTr {
+    margin-top: 1%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#divUser{
+    display:flex;
+}
+#divUserList {
+    text-align:center;
+    width: 600px;
+}
+#divMenuList{
+    width: 200px;
+}
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+#labelEdit{
+    font-size: 12pt;
+    margin-inline: 5px;
+}
+th,td{
+    width: 150px;
+    text-align:center;
+}
+thead{
+    border: solid 2px black;
+    border-radius: 10px;
+    color:red;
+}
+tbody {
+    border: solid 2px black;
+    border-radius: 10px;
+    color: #0000CD;
+}
+audio {
+    border: solid 1.5px #0a2980;
+    border-radius: 25px;
+    box-shadow: 0 0 10px #0a2980;
+    height: 30px;
+}
+
+video {
+    border: solid 1.5px #0a2980;
+    box-shadow: 0 0 10px #0a2980;
+    width: 300px;
+    height: 200px;
+}
+#divSearch{
+    display:flex;
+    justify-content:center;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+#search {
+    width: 375px;
+    height: 25px;
+    border: solid 1.5px #0a2980;
+    border-right:hidden;
+    border-radius: 5px 0 0 5px;
+}
+
+#searchButton {
+    width: 25px;
+    height: 25px;
+    background-color: #0a2980;
+    border: solid 1.5px #0a2980;
+    border-left: hidden;
+    border-radius: 0 5px 5px 0;
+    background-image: url(../Logo/Search.png);
+    background-size: cover;
+    margin:0;
+}
+#runningWrapper {
+    overflow: hidden;
+    margin-top: 0;
+    width: 390px;
+}
+#runningLabel {
+    white-space: nowrap;
+    animation: marquee 10s linear infinite;
+    font-size: 6pt;
+    color:red;
+}
+@keyframes marquee {
+    0% {
+        transform: translateX(100%);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+#image{
+    width: 150px;
+    height:150px;
+}
+
+.comm {
+    width: 300px;
+    border-radius: 10px 10px 10px 0;
+    background-color: #0a2980;
+    color:yellow;
+    padding-left: 5px;
+    margin-bottom: 7px;
+    font-size: 8pt;
+}
+dt {
+    color: red;
+    font-size: 10pt;
+}
+dd{
+    overflow-wrap:break-word;
+}
+.commDiv{
+    margin-top: 20px;
+    margin-left: 15px;
+    margin-bottom: 60px;
+}
+#aLike{
+    border: 0;
+    border-radius: 0;
+    box-shadow:none;
+    width:auto;
+}

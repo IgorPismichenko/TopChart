@@ -1,0 +1,57 @@
+﻿@model TopChart.Models.Singer
+
+@{
+    ViewData["Title"] = "CreateSinger";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div style="width:800px; background-color:white">
+    <header>
+        <div id="header">
+            <nav id="nav">
+                @if (Context.Session.GetInt32("Status") == 2)
+                {
+                    <a style="border: 0px; box-shadow:none" asp-area="" asp-controller="HomeVideo" asp-action="AdminVideo"><img src="/Logo/TopChartLogo.jpg" /></a>
+                    <a asp-area="" asp-controller="HomeAudio" asp-action="AdminAudio">Listen</a>
+                    <a asp-area="" asp-controller="HomeVideo" asp-action="Logout">Log Out</a>
+                }
+                else if (Context.Session.GetInt32("Status") == 1)
+                {
+                    <a style="border: 0px; box-shadow:none" asp-area="" asp-controller="HomeVideo" asp-action="Video"><img src="/Logo/TopChartLogo.jpg" /></a>
+                    <a asp-area="" asp-controller="HomeAudio" asp-action="Audio">Listen</a>
+                    <a asp-area="" asp-controller="AdminVideo" asp-action="Logout">Log Out</a>
+                }
+            </nav>
+        </div>
+    </header>
+    <hr style="margin: 0" />
+    <main id="main">
+    <div style="text-align:center">
+        <img src="~/Logo/VinylAccount.png" /><br />
+    </div>
+    <div id="mainReg">
+        <form asp-action="CreateSinger" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div>
+                <label asp-for="Name"></label>
+                <input style="border-top:hidden; border-left:hidden" asp-for="Name" class="form-control" />
+                <span style="font-size: 8pt" asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <br />
+            <div>
+                <label asp-for="Path"></label>
+                <input type="file" name="uploadedFile" />
+                <span style="font-size: 8pt" asp-validation-for="Path" class="text-danger"></span>
+            </div>
+            <div style="margin-top: 5px; text-align:center">
+                <input type="submit" value="Save" class="button" />
+            </div>
+        </form>
+    </div>
+    </main>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

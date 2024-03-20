@@ -1,0 +1,94 @@
+﻿@model TopChart.Models.Tracks
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div style="width:800px; background-color:white">
+    <header>
+        <div id="header">
+            <nav id="nav">
+                <a style="border: 0px; box-shadow:none" asp-area="" asp-controller="HomeAudio" asp-action="Audio"><img src="/Logo/TopChartLogo.jpg" /></a>
+                <a asp-area="" asp-controller="HomeVideo" asp-action="Video">Watch</a>
+                <a asp-area="" asp-controller="HomeAudio" asp-action="Logout">Log Out</a>
+            </nav>
+        </div>
+    </header>
+    <hr style="margin: 0" />
+    <main id="main">
+        @{
+            int? iD = @Context.Session.GetInt32("Id");
+            Singer s = new Singer();
+            string g = null;
+        }
+        @foreach (var i in ViewBag.Singer)
+        {
+            if (i.Id == Model.SingerId)
+            {
+               s = i;
+            }
+        }
+        @foreach (var i in ViewBag.Genre)
+        {
+            if (i.Id == Model.GenreId)
+            {
+                g = i.Name;
+            }
+        }
+        <div style="text-align:center">
+            <img src="~/Logo/VinylAccount.png" /><br />
+        </div>
+        <div style="display:flex; justify-content:center;align-items:center; margin-top:15px">
+            <audio controls>
+                <source src="@Model.Path" />
+            </audio>
+        </div>
+        <div id="mainReg">
+            <div>
+                <img id="image" style="object-fit:fill" src=@s.Path />
+                </div>
+            <div style="margin-inline: 10px">
+                <label>Title: @Model.Name</label><br />
+                <label>Singer: @s.Name</label><br />
+                <label>Album: @Model.Album</label><br />
+                <label>Genre: @g</label><br />
+                <label>Added on: @Model.Date</label><br />
+                <label>Size: @Model.Size</label><br />
+                <label>Rate: @Model.Like likes</label><br />
+            </div>
+        </div>
+        @if (Context.Session.GetInt32("Status") > 0)
+        {
+            <div style="text-align:center">
+                <label>Comment</label><br />
+                <form asp-action="Comment" method="post">
+                    <input type="text" name="comment" style="width:325px; height:75px" /><br /><br />
+                    <input type="submit" value="Post" class="button" asp-area="" asp-controller="HomeAudio" asp-action="Comment" />
+                </form>
+            </div>
+        }
+        <div class="commDiv">
+            @foreach(var m in ViewBag.Comments)
+            {
+                if(m.TrackId == iD)
+                {
+                    <div class="comm">
+                        @foreach (var u in ViewBag.Users)
+                        {
+                            if(m.UserId == u.Id)
+                            {
+                                <dt>@u.Login</dt>
+                            }
+                        }
+                        <dd>@m.Message</dd>
+                    </div>
+                }
+            }
+        </div>
+    </main>
+    <hr style="position:fixed; bottom: 0; left: 0; right: 0" />
+    <footer style="height: 30px">
+        <div style="text-align:center; font-size: 8pt">2024 Topchart</div>
+    </footer>
+</div>

@@ -1,0 +1,150 @@
+﻿@model IEnumerable<TopChart.Models.Video>
+
+@{
+    ViewData["Title"] = "Video";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div style="width:800px; background-color:white">
+    <header>
+        <div id="header">
+            <nav id="nav">
+                <a style="border: 0px; box-shadow:none" asp-area="" asp-controller="HomeVideo" asp-action="Video"><img src="/Logo/TopChartLogo.jpg" /></a>
+                <a asp-area="" asp-controller="HomeAudio" asp-action="Audio">Listen</a>
+                <a asp-area="" asp-controller="HomeVideo" asp-action="Logout">Log Out</a>
+            </nav>
+        </div>
+    </header>
+    <hr style="margin: 0" />
+    <main id="main">
+        @if (Model.Count() > 0)
+        {
+            <div id="divUser">
+                <div id="divUserList">
+                    <div id="divSearch">
+                        <form style="display:flex" asp-action="SearchVideo" method="post">
+                            <input type="text" name="search" id="search" />
+                            <input type="submit" value="" id="searchButton" asp-area="" asp-controller="HomeVideo" asp-action="SearchVideo"></input>
+                        </form>
+                    </div>
+                    <div style="display:flex; flex-direction:column; justify-content:center;align-items:center">
+                        @{
+                            string s = string.Empty;
+                            string g = string.Empty;
+                        }
+                        <div style="display:flex">
+                            <a style="color:red" id="a2" asp-area="" asp-controller="HomeVideo" asp-action="TopVideo">Top Chart</a>
+                        </div>
+                        <div>
+                        @foreach (var m in Model)
+                        {
+                            @foreach (var i in ViewBag.Singer)
+                            {
+                                if (i.Id == m.SingerId)
+                                {
+                                    s = i.Name;
+                                }
+                            }
+                            @foreach (var i in ViewBag.Genre)
+                            {
+                                if (i.Id == m.GenreId)
+                                {
+                                    g = i.Name;
+                                }
+                            }
+                            @if (Context.Session.GetInt32("Status") > 0)
+                            {
+                                <label>@m.Name - @s</label>
+                                <div style="display:flex; justify-content:center;align-items:center">
+                                    <video controls>
+                                        <source src="@m.Path" />
+                                    </video>
+                                    <a id="aLike" asp-controller="HomeVideo" asp-action="LikeVideo" asp-route-id="@m.Id"><img style="margin-left: 5px" src="/Logo/like.png" /></a><label>@m.Like</label> | <a id="a3" style="width: 40px" asp-controller="HomeVideo" asp-action="Details" asp-route-id="@m.Id">Details</a>
+                                </div>
+                                <div id="runningWrapper">
+                                    <label id="runningLabel">Track: @m.Name, Singer: @s, Album: @m.Album, Genre: @g, Added on: @m.Date, Size: @m.Size</label>
+                                </div>
+                                <div><hr style="margin-top: 0; width:390px; border-color: #0a2980" /></div>
+                            }
+                            else
+                            {
+                                <label>@m.Name - @s</label>
+                                <div style="display:flex; justify-content:center;align-items:center">
+                                    <video controls>
+                                        <source src="@m.Path" />
+                                    </video>
+                                    <a id="a3" style="width: 40px" asp-controller="HomeVideo" asp-action="Details" asp-route-id="@m.Id">Details</a>
+                                </div>
+                                <div id="runningWrapper" style="width: 335px">
+                                    <label id="runningLabel">Track: @m.Name, Singer: @s, Album: @m.Album, Genre: @g, Added on: @m.Date, Size: @m.Size</label>
+                                </div>
+                                <div><hr style="margin-top: 0; width:335px; border-color: #0a2980" /></div>
+                            }
+                        }
+                        </div>
+                    </div>
+                </div>
+                @if (Context.Session.GetInt32("Status") == 1)
+                {
+                    <div id="divMenuList">
+                        <label style="text-align:center; width: 100px">Hello @Context.Session.GetString("Login")</label>
+                        <a id="a2" asp-area="" asp-controller="HomeVideo" asp-action="Create">New clip</a>
+                        <a id="a2" asp-area="" asp-controller="HomeVideo" asp-action="CreateSinger">New singer</a>
+                    </div>
+                }
+                else if (Context.Session.GetInt32("Status") == 2)
+                {
+                    <div id="divMenuList">
+                        <label style="text-align:center; width: 100px">Hello @Context.Session.GetString("Login")</label>
+                        <a id="a2" asp-area="" asp-controller="HomeAudio" asp-action="EditUser">UsersList</a>
+                        <a id="a2" asp-area="" asp-controller="HomeVideo" asp-action="Create">New clip</a>
+                        <a id="a2" asp-area="" asp-controller="HomeVideo" asp-action="CreateSinger">New singer</a>
+                        <a id="a2" asp-area="" asp-controller="HomeVideo" asp-action="CreateGenre">New genre</a>
+                    </div>
+                }
+                else
+                {
+                    <div id="divMenuList">
+                        <label style="text-align:center; width: 100px">Hello @Context.Session.GetString("Login")</label>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div id="divUser">
+                <div style="text-align: center">
+                    <p>It`s nothing to play. Add some music!</p>
+                    <img style="width: 600px; height: 500px" src="~/Logo/Vinil.png" />
+                </div>
+                @if (Context.Session.GetInt32("Status") == 1)
+                {
+                    <div id="divMenuList">
+                        <label style="text-align:center; width: 100px">Hello @Context.Session.GetString("Login")</label>
+                        <a id="a2" asp-area="" asp-controller="HomeVideo" asp-action="Create">New clip</a>
+                        <a id="a2" asp-area="" asp-controller="HomeVideo" asp-action="CreateSinger">New singer</a>
+                    </div>
+                }
+                else if (Context.Session.GetInt32("Status") == 2)
+                {
+                    <div id="divMenuList">
+                        <label style="text-align:center; width: 100px">Hello @Context.Session.GetString("Login")</label>
+                        <a id="a2" asp-area="" asp-controller="HomeAudio" asp-action="EditUser">UsersList</a>
+                        <a id="a2" asp-area="" asp-controller="HomeVideo" asp-action="Create">New clip</a>
+                        <a id="a2" asp-area="" asp-controller="HomeVideo" asp-action="CreateSinger">New singer</a>
+                        <a id="a2" asp-area="" asp-controller="HomeVideo" asp-action="CreateGenre">New genre</a>
+                    </div>
+                }
+                else
+                {
+                    <div id="divMenuList">
+                        <label style="text-align:center; width: 100px">Hello @Context.Session.GetString("Login")</label>
+                    </div>
+                }
+            </div>
+        }
+    </main>
+    <hr style="position:fixed; bottom: 0; left: 0; right: 0" />
+    <footer style="height: 30px">
+        <div style="text-align:center; font-size: 8pt">2024 Topchart</div>
+    </footer>
+</div>

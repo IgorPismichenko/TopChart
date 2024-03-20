@@ -11,6 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\Posters\" />
+    <Folder Include="wwwroot\Video\" />
     <Folder Include="wwwroot\Tracks\" />
   </ItemGroup>
 

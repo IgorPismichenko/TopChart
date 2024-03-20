@@ -1,0 +1,29 @@
+﻿@model TopChart.Models.Users
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div style="width:800px; background-color:white; min-height: 100vh">
+    <header>
+        <div id="header">
+            <nav id="nav">
+                <a style="border: 0px; box-shadow:none" asp-area="" asp-controller="HomeAudio" asp-action="Delete"><img src="/Logo/TopChartLogo.jpg" /></a>
+                <a asp-area="" asp-controller="HomeVideo" asp-action="Video">Watch</a>
+            </nav>
+        </div>
+    </header>
+    <hr style="margin: 0" />
+    <div style="text-align:center">
+        <p>Are you sure you want to delete @Model.Login?</p>
+    </div>
+    <div id="mainReg">
+        <form asp-action="Delete">
+            <div style="text-align:center">
+            <input type="hidden" asp-for="Id" />
+            <input type="submit" value="Delete" class="button" />
+            <a style="margin-top: 10px" id="a2" asp-controller="HomeAudio" asp-action="EditUser">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>

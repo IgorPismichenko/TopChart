@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Collections;
 using TopChart.Models;
 
 namespace TopChart.Repositories
@@ -15,6 +16,10 @@ namespace TopChart.Repositories
         {
             return await _context.Singer.ToListAsync();
         }
+        public IEnumerable GetValues()
+        {
+            return _context.Singer;
+        }
         public async Task Create(Singer s)
         {
             await _context.Singer.AddAsync(s);
@@ -29,6 +34,11 @@ namespace TopChart.Repositories
         public async Task Save()
         {
             await _context.SaveChangesAsync();
+        }
+
+        public Singer GetSinger(int? id)
+        {
+            return _context.Singer.FirstOrDefault(a => a.Id == id);
         }
     }
 }

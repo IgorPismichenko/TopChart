@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Collections;
 using TopChart.Models;
 
 namespace TopChart.Repositories
@@ -15,6 +16,11 @@ namespace TopChart.Repositories
         {
             return await _context.Genre.ToListAsync();
         }
+
+        public IEnumerable GetValues()
+        {
+            return _context.Genre;
+        }
         public async Task Create(Genre g)
         {
             await _context.Genre.AddAsync(g);
@@ -29,6 +35,11 @@ namespace TopChart.Repositories
         public async Task Save()
         {
             await _context.SaveChangesAsync();
+        }
+
+        public Genre GetGenre(int? id)
+        {
+            return _context.Genre.FirstOrDefault(a => a.Id == id);
         }
     }
 }

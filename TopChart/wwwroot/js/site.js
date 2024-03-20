@@ -2,3 +2,8 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+function SearchClick() {
+    const s = document.getElementById("search");
+    const res = s.value;
+    Session["Search"] = res;
+}

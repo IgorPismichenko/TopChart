@@ -6,6 +6,7 @@ namespace TopChart.Repositories
     public class UsersRepository: IRepositoryUsers
     {
         private readonly TopChartDbContext _context;
+        private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1);
 
         public UsersRepository(TopChartDbContext context)
         {
@@ -13,11 +14,59 @@ namespace TopChart.Repositories
         }
         public async Task<List<Users>> GetUsersList()
         {
-            return await _context.Users.ToListAsync();
+            _semaphore.Wait();
+            try
+            {
+                return await _context.Users.ToListAsync();
+            }
+            finally
+            {
+                _semaphore.Release();
+            }
+        }
+
+        public IQueryable<Users> CheckUser(LoginModel logon)
+        {
+            _semaphore.Wait();
+            try
+            {
+                return _context.Users.Where(a => a.Login == logon.Login);
+            }
+            finally
+            {
+                _semaphore.Release();
+            }
+        }
+
+        public IQueryable<Users> CheckRegisterUser(RegisterModel reg)
+        {
+            return _context.Users.Where(a => a.Login == reg.Login);
+        }
+
+        public Users GetUserById(int? Id)
+        {
+            return _context.Users.FirstOrDefault(a => a.Id == Id);
         }
         public async Task Create(Users u)
         {
-            await _context.Users.AddAsync(u);
+            _semaphore.Wait();
+            try
+            {
+                await _context.Users.AddAsync(u);
+            }
+            finally
+            {
+                _semaphore.Release();
+            }
+            _semaphore.Wait();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            finally
+            {
+                _semaphore.Release();
+            }
         }
 
         public void Update(Users u)
@@ -35,6 +84,11 @@ namespace TopChart.Repositories
         public async Task Save()
         {
             await _context.SaveChangesAsync();
+        }
+
+        public bool UserExists(int id)
+        {
+            return _context.Users.Any(e => e.Id == id);
         }
     }
 }

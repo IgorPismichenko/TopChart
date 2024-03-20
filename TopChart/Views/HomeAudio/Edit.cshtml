@@ -1,0 +1,54 @@
+﻿@model TopChart.Models.Users
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div style="width:800px; background-color:white; min-height: 100vh">
+    <header>
+        <div id="header">
+            <nav id="nav">
+                <a style="border: 0px; box-shadow:none" asp-area="" asp-controller="HomeAudio" asp-action="EditUser"><img src="/Logo/TopChartLogo.jpg" /></a>
+                <a asp-area="" asp-controller="HomeVideo" asp-action="Video">Watch</a>
+            </nav>
+        </div>
+    </header>
+    <hr style="margin: 0" />
+    <div style="text-align:center">
+        <img src="~/Logo/VinylAccount.png" /><br />
+    </div>
+    <div id="mainReg">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div>
+                <label asp-for="Login"></label>
+                <input style="border-top:hidden; border-left:hidden" asp-for="Login" class="form-control" />
+                <span style="font-size: 8pt" asp-validation-for="Login" class="text-danger"></span>
+            </div>
+            <div style="display: none">
+                <label asp-for="Password"></label>
+                <input style="border-top:hidden; border-left:hidden" asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div style="display: none">
+                <label asp-for="Salt"></label>
+                <input style="border-top:hidden; border-left:hidden" asp-for="Salt" class="form-control" />
+                <span asp-validation-for="Salt" class="text-danger"></span>
+            </div>
+            <div>
+                <label asp-for="Status"></label>
+                <input style="border-top:hidden; border-left:hidden" asp-for="Status" class="form-control" />
+                <span style="font-size: 8pt" asp-validation-for="Status" class="text-danger"></span>
+            </div>
+            <div style="margin-top: 5px; text-align:center">
+                <input type="submit" value="Save" class="button" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

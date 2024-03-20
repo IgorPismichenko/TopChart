@@ -1,0 +1,67 @@
+﻿@model IEnumerable<TopChart.Models.Users>
+
+@{
+    ViewData["Title"] = "EditUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div style="width:800px; background-color:white">
+    <header>
+        <div id="header">
+            <nav id="nav">
+                <a style="border: 0px; box-shadow:none" asp-area="" asp-controller="HomeAudio" asp-action="AdminAudio"><img src="/Logo/TopChartLogo.jpg" /></a>
+                <a asp-area="" asp-controller="HomeVideo" asp-action="AdminVideo">Watch</a>
+                <a asp-area="" asp-controller="HomeAudio" asp-action="Logout">Log Out</a>
+            </nav>
+        </div>
+    </header>
+    <hr style="margin: 0" />
+    <main id="main">
+        @if (Model.Count() > 1)
+        {
+            <div id="divUser">
+                 <div style="display:flex; justify-content:center; align-items:center; width: 600px">
+                     <table>
+                        <thead>
+                            <tr>
+                                <th>Login</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                     @foreach (var m in Model)
+                     {
+                         @if (m.Login != "admin" && m.Login != "Admin")
+                         {       
+                             <tbody>
+                                 <tr>
+                                      <td>@m.Login</td>
+                                      <td>@m.Status</td>
+                                      <td><a id="a3" asp-controller="HomeAudio" asp-action="Edit" asp-route-id="@m.Id">Edit</a>|<a id="a3" asp-controller="HomeAudio" asp-action="Delete" asp-route-id="@m.Id">Delete</a>
+                                      </td>
+                                 </tr>
+                             </tbody>
+                         }
+                     }
+                     </table>
+                 </div>
+                 <div id="divMenuList">
+                     <label style="text-align:center; width: 100px">Hello admin</label>
+                     <a id="a2" asp-area="" asp-controller="HomeAudio" asp-action="Create">New track</a>
+                     <a id="a2" asp-area="" asp-controller="HomeAudio" asp-action="CreateSinger">New singer</a>
+                     <a id="a2" asp-area="" asp-controller="HomeAudio" asp-action="CreateGenre">New genre</a>
+                 </div>
+            </div>
+        }
+        else
+        {
+            <div style="text-align: center">
+                <p>No one registered yet!</p>
+                <img style="width: 600px; height: 500px" src="~/Logo/NoUser.png" />
+            </div>
+        }
+    </main>
+    <hr style="position:fixed; bottom: 0; left: 0; right: 0" />
+    <footer style="height: 30px">
+        <div style="text-align:center; font-size: 8pt">2024 Topchart</div>
+    </footer>
+</div>

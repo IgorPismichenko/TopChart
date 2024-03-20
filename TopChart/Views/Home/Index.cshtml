@@ -4,19 +4,74 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<header>
+<div style="width:800px; background-color:white">
+<header >
     <div id="header">
     <nav id="nav">
-        <a asp-area="" asp-controller="Home" asp-action="Index"><img src="/Logo/TopChartLogo.jpg" /></a>
-        <a  asp-area="" asp-controller="Home" asp-action="Video"><img src="/Logo/Plast.jpg" />Watch</a>
-        <a  asp-area="" asp-controller="Account" asp-action="Login">
-            <img src="/Logo/Plast.jpg" />Sign In
-        </a>
+        <a style="border: 0px; box-shadow:none" asp-area="" asp-controller="Home" asp-action="Index"><img style="border: 0" src="/Logo/TopChartLogo.jpg" /></a>
+        <a  asp-area="" asp-controller="Home" asp-action="IndexVideo">Watch</a>
+        <a  asp-area="" asp-controller="Account" asp-action="Login">Log In</a>
     </nav>
     </div>
 </header>
-<hr />
-@foreach (var m in Model)
+<hr style="margin: 0"/>
+<main id="main">
+@if (Model.Count() > 0)
 {
-   
+    <div id="divSearch">
+         <form style="display:flex" asp-action="Search" method="post">
+         <input type="text" name="search" id="search"/>
+         <input type="submit" value="" id="searchButton" asp-area="" asp-controller="Home" asp-action="Search"></input>
+         </form>
+    </div>
+    <div style="display:flex; flex-direction:column; justify-content:center;align-items:center">
+        <div style="display:flex">
+            <a style="color:red" id="a2" asp-area="" asp-controller="Home" asp-action="Top">Top Chart</a>
+        </div>
+        <div>
+        @foreach (var m in Model)
+        {
+            string s = string.Empty;
+            string g = string.Empty;
+            foreach (var i in ViewBag.Singer)
+                {
+                    if (i.Id == m.SingerId)
+                    {
+                        s = i.Name;
+                    }
+                }
+            foreach (var i in ViewBag.Genre)
+                {
+                    if (i.Id == m.GenreId)
+                    {
+                        g = i.Name;
+                    }
+                }
+            <label>@m.Name - @s</label>
+            <div style="display:flex; justify-content:center;align-items:center">
+                <audio controls>
+                     <source src="@m.Path" />
+                </audio>
+                <img style="margin-left: 5px" src="/Logo/like.png" /><label>@m.Like</label>
+            </div>
+            <div id="runningWrapper" style="width: 335px">
+                <label id="runningLabel">Track: @m.Name, Singer: @s, Album: @m.Album, Genre: @g, Added on: @m.Date, Size: @m.Size </label>
+            </div>
+            <div><hr style="margin-top: 0; width:335px; border-color: #0a2980" /></div>
+        }
+        </div>
+    </div>
 }
+else
+{
+    <div style="text-align: center">
+        <p>It`s nothing to play. Sign in to add some music!</p>
+        <img style="width: 600px; height: 500px" src="~/Logo/Vinil.png" />
+    </div>
+}
+</main>
+<hr style="position:fixed; bottom: 0; left: 0; right: 0" />
+<footer style="height: 30px">
+    <div style="text-align:center; font-size: 8pt">2024 Topchart</div>
+</footer>
+</div>

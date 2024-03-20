@@ -15,5 +15,8 @@ namespace TopChart.Models
         public DbSet<Singer> Singer { get; set; }
         public DbSet<Genre> Genre { get; set; }
         public DbSet<Video> Video { get; set; }
+
+        public DbSet<Comment> Comment { get; set; }
+        public DbSet<CommentVideo> CommentVideo { get; set; }
     }
 }
