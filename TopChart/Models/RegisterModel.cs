@@ -5,11 +5,14 @@ namespace TopChart.Models
     public class RegisterModel
     {
         [Required(ErrorMessage = "Login must be filled")]
+        [RegularExpression(@"^[a-zA-Z0-9.-]+$", ErrorMessage = "Login can only contain letters, digits, dot, and hyphen")]
         [Display(Name = "Login")]
         public string? Login { get; set; }
 
         [Required(ErrorMessage = "Password must be filled")]
         [DataType(DataType.Password)]
+        [MinLength(8, ErrorMessage = "Password must be at least 8 characters long")]
+        [RegularExpression(@"^[a-zA-Z0-9]*[0-9]+[a-zA-Z0-9]*$", ErrorMessage = "Password must contain at least one letter and one digit")]
         [Display(Name = "Password")]
         public string? Password { get; set; }
 
