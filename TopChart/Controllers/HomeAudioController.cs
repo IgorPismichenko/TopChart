@@ -63,6 +63,11 @@ namespace TopChart.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (!uploadedFile.FileName.EndsWith(".mp3", StringComparison.OrdinalIgnoreCase))
+                {
+                    ModelState.AddModelError("Path", "Only mp3 files are allowed.");
+                    return View(track);
+                }
                 if (uploadedFile != null)
                 {
                     string path = "/Tracks/" + uploadedFile.FileName;

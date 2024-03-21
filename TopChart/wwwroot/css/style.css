@@ -71,16 +71,16 @@ a:hover{
 
 .button {
     width: 100px;
+    height:30px;
     background-color: #F8F8FF;
     border: none;
-    border-radius: 25px;
+    border-radius: 10px;
     font-size: 12px;
     color: #0a2980;
-    box-shadow: -6px -6px 10px #f9f9f9, 6px 6px 10px #00000026;
+    box-shadow: -3px -3px 3px #F0FFFF, 3px 3px 3px #00008B;
 }
     .button:hover {
-        box-shadow: 2px 2px 2px #f9f9f9,
-            -2px -2px 2px #00000026;
+        box-shadow: 2px 2px 2px #F0FFFF, -2px -2px 2px #00008B;
     }
 
 #mainReg {
