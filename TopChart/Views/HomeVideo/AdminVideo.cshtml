@@ -9,8 +9,15 @@
         <div id="header">
             <nav id="nav">
                 <a style="border: 0px; box-shadow:none" asp-area="" asp-controller="HomeVideo" asp-action="AdminVideo"><img src="/Logo/TopChartLogo.jpg" /></a>
-                <a asp-area="" asp-controller="HomeAudio" asp-action="AdminAudio">Listen</a>
-                <a asp-area="" asp-controller="HomeVideo" asp-action="Logout">Log Out</a>
+                <a asp-area="" asp-controller="HomeAudio" asp-action="AdminAudio" style="margin-top:25px">Listen</a>
+                <div style="margin-right: 5px">
+                    <div>
+                        <label style="text-align:center; width: 100px; color:yellow">Hello @Context.Session.GetString("Login")</label>
+                    </div>
+                    <div>
+                        <a asp-area="" asp-controller="HomeVideo" asp-action="Logout" style="display: inline-block; width: 100px;">Log Out</a>
+                    </div>
+                </div>
             </nav>
         </div>
     </header>
@@ -84,7 +91,6 @@
                     </div>
             </div>
             <div id="divMenuList">
-                <label style="text-align:center; width: 100px">Hello Admin</label>
                 <a id="a2" asp-area="" asp-controller="HomeAudio" asp-action="EditUser">UsersList</a>
                 <a id="a2" asp-area="" asp-controller="HomeVideo" asp-action="Create">New clip</a>
                 <a id="a2" asp-area="" asp-controller="HomeVideo" asp-action="CreateSinger">New singer</a>
@@ -100,7 +106,6 @@
                 <img style="width: 600px; height: 500px" src="~/Logo/Vinil.png" />
             </div>
             <div id="divMenuList">
-                <label style="text-align:center; width: 100px">Hello @Context.Session.GetString("Login")</label>
                 <a id="a2" asp-area="" asp-controller="HomeAudio" asp-action="EditUser">UsersList</a>
                 <a id="a2" asp-area="" asp-controller="HomeVideo" asp-action="Create">New clip</a>
                 <a id="a2" asp-area="" asp-controller="HomeVideo" asp-action="CreateSinger">New singer</a>

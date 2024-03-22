@@ -9,8 +9,15 @@
     <div id="header">
         <nav id="nav">
              <a style="border: 0px; box-shadow:none" asp-area="" asp-controller="HomeAudio" asp-action="Audio"><img src="/Logo/TopChartLogo.jpg" /></a>
-             <a asp-area="" asp-controller="HomeVideo" asp-action="Video">Watch</a>
-             <a asp-area="" asp-controller="HomeAudio" asp-action="Logout">Log Out</a>
+             <a asp-area="" asp-controller="HomeVideo" asp-action="Video" style="margin-top:25px">Watch</a>
+             <div style="margin-right: 5px">
+                 <div>
+                     <label style="text-align:center; width: 100px; color:yellow">Hello @Context.Session.GetString("Login")</label>
+                 </div>
+                 <div>
+                        <a asp-area="" asp-controller="HomeAudio" asp-action="Logout" style="display: inline-block; width: 100px;">Log Out</a>
+                 </div>
+             </div>
         </nav>
     </div>
 </header>
@@ -87,7 +94,6 @@
                 @if (Context.Session.GetInt32("Status") == 1)
                 {
                     <div id="divMenuList">
-                        <label style="text-align:center; width: 100px">Hello @Context.Session.GetString("Login")</label>
                         <a id="a2" asp-area="" asp-controller="HomeAudio" asp-action="Create">New track</a>
                         <a id="a2" asp-area="" asp-controller="HomeAudio" asp-action="CreateSinger">New singer</a>
                     </div>
@@ -95,53 +101,52 @@
                 else if (Context.Session.GetInt32("Status") == 2)
                 {
                     <div id="divMenuList">
-                        <label style="text-align:center; width: 100px">Hello @Context.Session.GetString("Login")</label>
                         <a id="a2" asp-area="" asp-controller="HomeAudio" asp-action="EditUser">UsersList</a>
                         <a id="a2" asp-area="" asp-controller="HomeAudio" asp-action="Create">New track</a>
                         <a id="a2" asp-area="" asp-controller="HomeAudio" asp-action="CreateSinger">New singer</a>
                         <a id="a2" asp-area="" asp-controller="HomeAudio" asp-action="CreateGenre">New genre</a>
-                    </div>
-                }
-                else
-                {
-                    <div id="divMenuList">
-                        <label style="text-align:center; width: 100px">Hello @Context.Session.GetString("Login")</label>
                     </div>
                 }
             </div>
     }
     else
     {
+            @if (Context.Session.GetInt32("Status") == 1)
+            {
             <div id="divUser">
                 <div style="text-align: center">
                     <p>It`s nothing to play. Add some music!</p>
                     <img style="width: 600px; height: 500px" src="~/Logo/Vinil.png" />
                 </div>
-                @if (Context.Session.GetInt32("Status") == 1)
-                {
-                    <div id="divMenuList">
-                        <label style="text-align:center; width: 100px">Hello @Context.Session.GetString("Login")</label>
-                        <a id="a2" asp-area="" asp-controller="HomeAudio" asp-action="Create">New track</a>
-                        <a id="a2" asp-area="" asp-controller="HomeAudio" asp-action="CreateSinger">New singer</a>
+                <div id="divMenuList">
+                    <a id="a2" asp-area="" asp-controller="HomeAudio" asp-action="Create">New track</a>
+                    <a id="a2" asp-area="" asp-controller="HomeAudio" asp-action="CreateSinger">New singer</a>
+                </div>
+            </div>
+            }
+            else if (Context.Session.GetInt32("Status") == 2)
+            {
+                <div id="divUser">
+                    <div style="text-align: center">
+                        <p>It`s nothing to play. Add some music!</p>
+                        <img style="width: 600px; height: 500px" src="~/Logo/Vinil.png" />
                     </div>
-                }
-                else if (Context.Session.GetInt32("Status") == 2)
-                {
                     <div id="divMenuList">
-                        <label style="text-align:center; width: 100px">Hello @Context.Session.GetString("Login")</label>
                         <a id="a2" asp-area="" asp-controller="HomeAudio" asp-action="EditUser">UsersList</a>
                         <a id="a2" asp-area="" asp-controller="HomeAudio" asp-action="Create">New track</a>
                         <a id="a2" asp-area="" asp-controller="HomeAudio" asp-action="CreateSinger">New singer</a>
                         <a id="a2" asp-area="" asp-controller="HomeAudio" asp-action="CreateGenre">New genre</a>
                     </div>
-                }
-                else
-                {
-                    <div id="divMenuList">
-                        <label style="text-align:center; width: 100px">Hello @Context.Session.GetString("Login")</label>
-                    </div>
-                }
-            </div>
+                </div>
+            }
+            else
+            {
+                <div style="text-align: center">
+                    <p>It`s nothing to play. Sign in to add some music!</p>
+                    <img style="width: 600px; height: 500px" src="~/Logo/Vinil.png" />
+                </div>
+            }
+        }
     }
 </main>
 <hr style="position:fixed; bottom: 0; left: 0; right: 0" />
