@@ -13,12 +13,13 @@ namespace TopChart.Repositories
         }
         public async Task<List<Video>> GetVideoList()
         {
-            return await _context.Video.ToListAsync();
+            var tracksContext = _context.Video.Include(p => p.Singer).Include(p => p.Genre);
+            return await tracksContext.ToListAsync();
         }
 
         public IQueryable<Video> GetSearchList(string name)
         {
-            return _context.Video.Where(a => a.Name == name);
+            return _context.Video.Include(p => p.Singer).Include(p => p.Genre).Where(a => a.Name == name);
         }
         public async Task Create(Video t)
         {
@@ -38,7 +39,8 @@ namespace TopChart.Repositories
 
         public Video GetTrack(int? id)
         {
-            return _context.Video.FirstOrDefault(a => a.Id == id);
+            var tracksContext = _context.Video.Include(p => p.Singer).Include(p => p.Genre);
+            return tracksContext.FirstOrDefault(a => a.Id == id);
         }
 
         public void Update(Video v)
@@ -48,7 +50,7 @@ namespace TopChart.Repositories
 
         public async Task<List<Video>> GetSortedTracksList()
         {
-            var tracks = await _context.Video.ToListAsync();
+            var tracks = _context.Video.Include(p => p.Singer).ToList();
             for (int i = 0; i < tracks.Count; i++)
             {
                 for (int j = 0; j < tracks.Count - 1 - i; j++)

@@ -27,18 +27,10 @@ namespace TopChart.Controllers
         }
         public async Task<IActionResult> Audio()
         {
-            ViewData["Singer"] = await repoSing.GetSingersList();
             ViewData["Genre"] = await repoGen.GetGenresList();
+            ViewData["TopSingers"] = await repo.GetSortedTracksList();
             Users users = new Users();
             ViewData["Users"] = users;
-            var model = await repo.GetTracksList();
-            return View(model);
-        }
-
-        public async Task<IActionResult> AdminAudio()
-        {
-            ViewData["Singer"] = await repoSing.GetSingersList();
-            ViewData["Genre"] = await repoGen.GetGenresList();
             var model = await repo.GetTracksList();
             return View(model);
         }
@@ -78,7 +70,7 @@ namespace TopChart.Controllers
                     track.Path = path;
                     track.Size = uploadedFile.Length.ToString();
                 }
-                track.Date = DateTime.Today.ToString();
+                track.Date = DateTime.Now.ToString();
                 track.Like = 0;
                 await repo.Create(track);
                 await repo.Save();
@@ -101,7 +93,7 @@ namespace TopChart.Controllers
             {
                 await repoGen.Create(genre);
                 await repoGen.Save();
-                return RedirectToAction(nameof(AdminAudio));
+                return RedirectToAction(nameof(Audio));
             }
             return View(genre);
         }
@@ -214,8 +206,8 @@ namespace TopChart.Controllers
         [HttpPost]
         public async Task<IActionResult> Search(string search)
         {
-            ViewData["Singer"] = await repoSing.GetSingersList();
             ViewData["Genre"] = await repoGen.GetGenresList();
+            ViewData["TopSingers"] = await repo.GetSortedTracksList();
             var tracks = repo.GetSearchList(search);
             if (tracks.Count() == 0)
             {
@@ -231,8 +223,8 @@ namespace TopChart.Controllers
                 return NotFound();
             }
             HttpContext.Session.SetInt32("Id", (int)id);
-            ViewData["Singer"] = await repoSing.GetSingersList();
             ViewData["Genre"] = await repoGen.GetGenresList();
+            ViewData["TopSingers"] = await repo.GetSortedTracksList();
             ViewData["Comments"] = await repoComm.GetCommentList();
             ViewData["Users"] = await repoUsers.GetUsersList();
             var track = repo.GetTrack(id);
@@ -248,7 +240,7 @@ namespace TopChart.Controllers
         public async Task<IActionResult> Comment([Bind("Id")] Comment comm, string comment)
         {
             comm.Message = comment;
-            comm.Date = DateTime.Today.ToString();
+            comm.Date = DateTime.Now.ToString();
             string? login = HttpContext.Session.GetString("Login");
             var users = await repoUsers.GetUsersList();
             foreach (var user in users)
@@ -263,8 +255,8 @@ namespace TopChart.Controllers
             comm.TrackId = track.Id;
             await repoComm.Create(comm);
             await repoComm.Save();
-            ViewData["Singer"] = await repoSing.GetSingersList();
             ViewData["Genre"] = await repoGen.GetGenresList();
+            ViewData["TopSingers"] = await repo.GetSortedTracksList();
             ViewData["Comments"] = await repoComm.GetCommentList();
             ViewData["Users"] = await repoUsers.GetUsersList();
             HttpContext.Session.SetInt32("Id", (int)id);
@@ -277,8 +269,8 @@ namespace TopChart.Controllers
             track.Like += 1;
             repo.Update(track);
             await repo.Save();
-            ViewData["Singer"] = await repoSing.GetSingersList();
             ViewData["Genre"] = await repoGen.GetGenresList();
+            ViewData["TopSingers"] = await repo.GetSortedTracksList();
             Users users = new Users();
             ViewData["Users"] = users;
             var model = await repo.GetTracksList();
@@ -287,8 +279,8 @@ namespace TopChart.Controllers
 
         public async Task<IActionResult> Top()
         {
-            ViewData["Singer"] = await repoSing.GetSingersList();
             ViewData["Genre"] = await repoGen.GetGenresList();
+            ViewData["TopSingers"] = await repo.GetSortedTracksList();
             var model = await repo.GetSortedTracksList();
             return View("Audio", model);
         }

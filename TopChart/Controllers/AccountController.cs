@@ -17,8 +17,6 @@ namespace TopChart.Controllers
         }
         public ActionResult Login()
         {
-            //Users users = new Users();
-            //ViewData["Users"] = users;
             return View();
         }
 
@@ -54,10 +52,7 @@ namespace TopChart.Controllers
                 }
                 HttpContext.Session.SetString("Login", user.Login);
                 HttpContext.Session.SetInt32("Status", user.Status);
-                if (logon.Login == "admin" || logon.Login == "Admin")
-                    return RedirectToAction("AdminAudio", "HomeAudio");
-                else
-                    return RedirectToAction("Audio", "HomeAudio");
+                return RedirectToAction("Audio", "HomeAudio");
             }
             return View(logon);
         }
@@ -100,7 +95,6 @@ namespace TopChart.Controllers
                 else
                     user.Status = 0;
                 repo.Create(user);
-                //repo.Save();
                 return RedirectToAction("Login");
             }
             return View(reg);

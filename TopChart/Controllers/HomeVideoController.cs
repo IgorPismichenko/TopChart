@@ -25,22 +25,13 @@ namespace TopChart.Controllers
         }
         public async Task<IActionResult> Video()
         {
-            ViewData["Singer"] = await repoSing.GetSingersList();
             ViewData["Genre"] = await repoGen.GetGenresList();
+            ViewData["TopSingers"] = await repo.GetSortedTracksList();
             Users users = new Users();
             ViewData["Users"] = users;
             var model = await repo.GetVideoList();
             return View(model);
         }
-
-        public async Task<IActionResult> AdminVideo()
-        {
-            ViewData["Singer"] = await repoSing.GetSingersList();
-            ViewData["Genre"] = await repoGen.GetGenresList();
-            var model = await repo.GetVideoList();
-            return View(model);
-        }
-
         public IActionResult Create()
         {
             ViewData["SingerId"] = new SelectList(repoSing.GetValues(), "Id", "Name");
@@ -65,7 +56,7 @@ namespace TopChart.Controllers
                     track.Path = path;
                     track.Size = uploadedFile.Length.ToString();
                 }
-                track.Date = DateTime.Today.ToString();
+                track.Date = DateTime.Now.ToString();
                 track.Like = 0;
                 await repo.Create(track);
                 await repo.Save();
@@ -88,7 +79,7 @@ namespace TopChart.Controllers
             {
                 await repoGen.Create(genre);
                 await repoGen.Save();
-                return RedirectToAction(nameof(AdminVideo));
+                return RedirectToAction(nameof(Video));
             }
             return View(genre);
         }
@@ -128,8 +119,8 @@ namespace TopChart.Controllers
         [HttpPost]
         public async Task<IActionResult> SearchVideo(string search)
         {
-            ViewData["Singer"] = await repoSing.GetSingersList();
             ViewData["Genre"] = await repoGen.GetGenresList();
+            ViewData["TopSingers"] = await repo.GetSortedTracksList();
             var clips = repo.GetSearchList(search);
             if (clips.Count() == 0)
             {
@@ -145,8 +136,8 @@ namespace TopChart.Controllers
                 return NotFound();
             }
             HttpContext.Session.SetInt32("Id", (int)id);
-            ViewData["Singer"] = await repoSing.GetSingersList();
             ViewData["Genre"] = await repoGen.GetGenresList();
+            ViewData["TopSingers"] = await repo.GetSortedTracksList();
             ViewData["CommentsVideo"] = await repoComm.GetCommentList();
             ViewData["Users"] = await repoUsers.GetUsersList();
             var clip = repo.GetTrack(id);
@@ -162,7 +153,7 @@ namespace TopChart.Controllers
         public async Task<IActionResult> CommentVideo([Bind("Id")] CommentVideo comm, string comment)
         {
             comm.Message = comment;
-            comm.Date = DateTime.Today.ToString();
+            comm.Date = DateTime.Now.ToString();
             string? login = HttpContext.Session.GetString("Login");
             var users = await repoUsers.GetUsersList();
             foreach (var user in users)
@@ -177,8 +168,8 @@ namespace TopChart.Controllers
             comm.VideoId = clip.Id;
             await repoComm.Create(comm);
             await repoComm.Save();
-            ViewData["Singer"] = await repoSing.GetSingersList();
             ViewData["Genre"] = await repoGen.GetGenresList();
+            ViewData["TopSingers"] = await repo.GetSortedTracksList();
             ViewData["CommentsVideo"] = await repoComm.GetCommentList();
             ViewData["Users"] = await repoUsers.GetUsersList();
             HttpContext.Session.SetInt32("Id", (int)id);
@@ -191,8 +182,8 @@ namespace TopChart.Controllers
             track.Like += 1;
             repo.Update(track);
             await repo.Save();
-            ViewData["Singer"] = await repoSing.GetSingersList();
             ViewData["Genre"] = await repoGen.GetGenresList();
+            ViewData["TopSingers"] = await repo.GetSortedTracksList();
             Users users = new Users();
             ViewData["Users"] = users;
             var model = await repo.GetVideoList();
@@ -201,8 +192,8 @@ namespace TopChart.Controllers
 
         public async Task<IActionResult> TopVideo()
         {
-            ViewData["Singer"] = await repoSing.GetSingersList();
             ViewData["Genre"] = await repoGen.GetGenresList();
+            ViewData["TopSingers"] = await repo.GetSortedTracksList();
             var model = await repo.GetSortedTracksList();
             return View("Video", model);
         }

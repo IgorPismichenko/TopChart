@@ -25,15 +25,15 @@ namespace TopChart.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            ViewData["Singer"] = await repoSing.GetSingersList();
             ViewData["Genre"] = await repoGen.GetGenresList();
+            ViewData["TopSingers"] = await repo.GetSortedTracksList();
             var model = await repo.GetTracksList();
             return View(model);
         }
         public async Task<IActionResult> IndexVideo()
         {
-            ViewData["Singer"] = await repoSing.GetSingersList();
             ViewData["Genre"] = await repoGen.GetGenresList();
+            ViewData["TopSingers"] = await repo.GetSortedTracksList();
             var model = await repoV.GetVideoList();
             return View(model);
         }
@@ -41,8 +41,8 @@ namespace TopChart.Controllers
         [HttpPost]
         public async Task<IActionResult> Search(string search)
         {
-            ViewData["Singer"] = await repoSing.GetSingersList();
             ViewData["Genre"] = await repoGen.GetGenresList();
+            ViewData["TopSingers"] = await repo.GetSortedTracksList();
             var tracks = repo.GetSearchList(search);
             if (tracks.Count() == 0)
             {
@@ -54,8 +54,8 @@ namespace TopChart.Controllers
         [HttpPost]
         public async Task<IActionResult> SearchVideo(string search)
         {
-            ViewData["Singer"] = await repoSing.GetSingersList();
             ViewData["Genre"] = await repoGen.GetGenresList();
+            ViewData["TopSingers"] = await repo.GetSortedTracksList();
             var clips = repoV.GetSearchList(search);
             if (clips.Count() == 0)
             {
@@ -66,16 +66,16 @@ namespace TopChart.Controllers
 
         public async Task<IActionResult> Top()
         {
-            ViewData["Singer"] = await repoSing.GetSingersList();
             ViewData["Genre"] = await repoGen.GetGenresList();
+            ViewData["TopSingers"] = await repo.GetSortedTracksList();
             var model = await repo.GetSortedTracksList();
             return View("Index", model);
         }
 
         public async Task<IActionResult> TopVideo()
         {
-            ViewData["Singer"] = await repoSing.GetSingersList();
             ViewData["Genre"] = await repoGen.GetGenresList();
+            ViewData["TopSingers"] = await repo.GetSortedTracksList();
             var model = await repoV.GetSortedTracksList();
             return View("IndexVideo", model);
         }

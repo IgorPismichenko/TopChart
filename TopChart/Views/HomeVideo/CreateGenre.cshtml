@@ -4,44 +4,46 @@
     ViewData["Title"] = "CreateGenre";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div style="width:800px; background-color:white">
+<div style="width:800px">
     <header>
         <div id="header">
-            <nav id="nav">
-                @if (Context.Session.GetInt32("Status") == 2)
-                {
-                    <a style="border: 0px; box-shadow:none" asp-area="" asp-controller="HomeVideo" asp-action="AdminVideo"><img src="/Logo/TopChartLogo.jpg" /></a>
-                    <a asp-area="" asp-controller="HomeAudio" asp-action="AdminAudio">Listen</a>
-                    <a asp-area="" asp-controller="HomeVideo" asp-action="Logout">Log Out</a>
-                }
-                else if (Context.Session.GetInt32("Status") == 1)
-                {
-                    <a style="border: 0px; box-shadow:none" asp-area="" asp-controller="HomeVideo" asp-action="Video"><img src="/Logo/TopChartLogo.jpg" /></a>
-                    <a asp-area="" asp-controller="HomeAudio" asp-action="Audio">Listen</a>
-                    <a asp-area="" asp-controller="HomeVideo" asp-action="Logout">Log Out</a>
-                }
-            </nav>
+            <a style="font-weight:bold; font-size:14pt; color:white; margin:5px" asp-area="" asp-controller="HomeVideo" asp-action="Video">TOP Chart</a>
+            <div style="margin-right: 5px">
+                <div>
+                    <label style="text-align:center; width: 100px; color:white">Hello @Context.Session.GetString("Login")</label>
+                </div>
+                <div>
+                    <a asp-area="" asp-controller="HomeVideo" asp-action="Logout" style="font-size:10pt; color:white; display: inline-block; width: 100px;">Log out</a>
+                </div>
+            </div>
         </div>
     </header>
-    <hr style="margin: 0" />
-    <main id="main">
-    <div style="text-align:center">
-        <img src="~/Logo/VinylAccount.png" /><br />
-    </div>
-    <div id="mainReg">
-        <form asp-action="CreateGenre" method="post" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div>
-                <label asp-for="Name"></label>
-                <input style="border-top:hidden; border-left:hidden" asp-for="Name" class="form-control" />
-                <span style="font-size: 8pt" asp-validation-for="Name" class="text-danger"></span>
+    <div style="display:flex">
+        <main id="aside">
+            <label style="font-weight:bold; font-size:12pt; color:#2F4F4F; margin:7px 0 0 10px">Menu</label><br />
+            <hr style="margin:1px" />
+
+            <a style="margin-left:15px; color:#2F4F4F; font-size:12px" asp-area="" asp-controller="HomeAudio" asp-action="Audio">Audio</a><br />
+            <a style="margin-left:15px; color:#2F4F4F; font-size:12px" asp-area="" asp-controller="HomeVideo" asp-action="TopVideo">Top Chart</a><br />
+            <br /><br />
+        </main>
+        <aside id="main">
+            <div id="mainReg">
+                <h5 style="color:#2F4F4F; margin-top:30px">Create new genre</h5>
+                <form asp-action="CreateGenre" method="post" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div style="text-align:center">
+                        <label style="color:#2F4F4F; width:350px; text-align:left" asp-for="Name"></label><br />
+                        <input style="width:350px" asp-for="Name" class="formControl" /><br />
+                        <span style="font-size: 8pt" asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div style="margin-top: 15px; text-align:center">
+                        <input type="submit" value="Save" class="button" />
+                    </div>
+                </form>
             </div>
-            <div style="margin-top: 5px; text-align:center">
-                <input type="submit" value="Save" class="button" />
-            </div>
-        </form>
+        </aside>
     </div>
-    </main>
 </div>
 
 @section Scripts {

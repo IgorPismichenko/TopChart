@@ -13,12 +13,13 @@ namespace TopChart.Repositories
         }
         public async Task<List<Tracks>> GetTracksList()
         {
-            return await _context.Tracks.ToListAsync();
+            var tracksContext = _context.Tracks.Include(p => p.Singer).Include(p => p.Genre);
+            return await tracksContext.ToListAsync();
         }
 
         public IQueryable<Tracks> GetSearchList(string name)
         {
-            return _context.Tracks.Where(a => a.Name == name);
+            return _context.Tracks.Include(p => p.Singer).Include(p => p.Genre).Where(a => a.Name == name);
         }
         public async Task Create(Tracks t)
         {
@@ -38,7 +39,8 @@ namespace TopChart.Repositories
 
         public Tracks GetTrack(int? id)
         {
-            return _context.Tracks.FirstOrDefault(a => a.Id == id);
+            var tracksContext = _context.Tracks.Include(p => p.Singer).Include(p => p.Genre);
+            return tracksContext.FirstOrDefault(a => a.Id == id);
         }
 
         public void Update(Tracks t)
@@ -48,8 +50,8 @@ namespace TopChart.Repositories
 
         public async Task<List<Tracks>> GetSortedTracksList()
         {
-            var tracks = await _context.Tracks.ToListAsync();
-            for(int i = 0;i < tracks.Count; i++)
+            var tracks = _context.Tracks.Include(p => p.Singer).ToList();
+            for (int i = 0;i < tracks.Count; i++)
             {
                 for(int j = 0;j < tracks.Count - 1 - i; j++)
                 {
